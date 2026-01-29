@@ -1,0 +1,14 @@
+{
+  "name": "news-search-chatbot",
+  "version": "1.0.0",
+  "description": "키워드로 관련 뉴스 10개를 검색하는 챗봇 (Node.js)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "install-and-run": "npm install && npm start"
+  },
+  "dependencies": {
+    "duck-duck-scrape": "^2.2.7",
+    "express": "^4.18.2"
+  }
+}

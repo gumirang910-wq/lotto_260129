@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뉴스 검색 (설치 없음)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Malgun Gothic", "Segoe UI", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin: 0 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .caption {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2rem;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 1rem;
+    }
+    input::placeholder { color: rgba(255,255,255,0.5); }
+    input:focus {
+      outline: none;
+      border-color: #7dd3fc;
+    }
+    button {
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 2rem;
+      background: #0f3460;
+      color: #7dd3fc;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #16213e; }
+    .note {
+      font-size: 0.8rem;
+      opacity: 0.75;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>📰 뉴스 검색</h1>
+    <p class="caption">Python·Node 설치 없이 사용하는 방법입니다.<br>키워드를 입력하면 구글 뉴스 검색 페이지가 열립니다.</p>
+    <form class="form" id="form">
+      <input type="text" id="keyword" placeholder="검색할 키워드 입력" autocomplete="off" required />
+      <button type="submit">검색</button>
+    </form>
+    <p class="note">→ 구글 뉴스에서 관련 기사를 확인할 수 있습니다. (이 페이지에서는 결과를 가져오지 않습니다)</p>
+  </div>
+  <script>
+    document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var q = document.getElementById("keyword").value.trim();
+      if (!q) return;
+      window.open("https://www.google.com/search?q=" + encodeURIComponent(q) + "&tbm=nws", "_blank");
+    });
+  </script>
+</body>
+</html>
