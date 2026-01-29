@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>로또 번호 랜덤 추첨기</title>
+    <meta
+      name="description"
+      content="1~45 사이 중복 없는 로또 번호 6개를 랜덤으로 추첨해주는 웹페이지"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar" aria-label="상단 메뉴">
+        <div class="topbar-left">
+          <div class="brand" aria-label="로또플릭스">
+            <span class="brand-mark">L</span>
+            <span class="brand-text">LOTTOFLIX</span>
+          </div>
+          <nav class="nav" aria-label="메뉴">
+            <a class="nav-link is-active" href="#hero">홈</a>
+            <a class="nav-link" href="#result">추천</a>
+            <a class="nav-link" href="#historyCard">내가 본 추첨</a>
+          </nav>
+        </div>
+        <div class="topbar-right">
+          <button id="btnTheme" class="btn btn-ghost" type="button" aria-pressed="false">
+            테마
+          </button>
+        </div>
+      </header>
+
+      <main class="page" aria-labelledby="title">
+        <section id="hero" class="hero" aria-label="히어로">
+          <div class="hero-bg" aria-hidden="true"></div>
+          <div class="hero-content">
+            <div class="hero-masthead" aria-hidden="true">
+              <span class="hero-masthead-left">LOTTO</span>
+              <span class="hero-masthead-right">PICKS</span>
+            </div>
+            <div class="badge">오늘의 추천 콘텐츠</div>
+            <h1 id="title" class="hero-title">로또 번호 랜덤 추첨기</h1>
+            <p class="hero-subtitle">
+              한 번에 <strong>5게임</strong> · 각 게임 <strong>6개 + 보너스</strong> · 자동 정렬 · 기록 저장
+            </p>
+            <div class="hero-actions">
+              <button id="btnDraw" class="btn btn-primary btn-lg" type="button">▶ 추첨하기</button>
+              <button id="btnCopy" class="btn btn-lg" type="button" disabled>번호 복사</button>
+            </div>
+            <div class="hero-meta">
+              <span class="pill">단축키: Enter</span>
+              <span class="pill">복사: C</span>
+              <span class="pill">최근 추첨: <span id="drawTime">-</span></span>
+            </div>
+          </div>
+          <div class="fade-bottom" aria-hidden="true"></div>
+        </section>
+
+        <section id="result" class="rail" aria-label="추천 번호">
+          <div class="rail-head">
+            <h2 class="rail-title">추천 번호 (5게임)</h2>
+            <div class="rail-hint">각 게임 6개 + 보너스</div>
+          </div>
+          <div class="panel">
+            <div class="balls-wrap">
+              <div id="balls" class="balls" aria-live="polite" aria-atomic="true"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="historyCard" class="rail" aria-label="추첨 기록">
+          <div class="rail-head">
+            <h2 class="rail-title">내가 본 추첨</h2>
+            <div class="rail-actions">
+              <button id="btnClearHistory" class="btn btn-danger" type="button">기록 지우기</button>
+            </div>
+          </div>
+          <div class="panel">
+            <ol id="history" class="history" aria-label="최근 추첨 목록"></ol>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <span>로컬에서만 동작하며 기록은 이 브라우저에 저장됩니다.</span>
+        </footer>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
