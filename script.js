@@ -5,6 +5,23 @@ const DRAWS_PER_CLICK = 5;
 
 const $ = (sel) => document.querySelector(sel);
 
+// 예시 데이터(원하시면 여기 값을 실제 데이터로 교체/연동 가능)
+const BIGGEST_JACKPOT_EXAMPLE = {
+  round: 19,
+  date: "2003-03-08",
+  amountWon: "₩40,721,087,500",
+  numbers: [6, 30, 38, 39, 40, 41],
+  bonus: 7,
+};
+
+const TOP_FIRST_PRIZE_SHOPS_EXAMPLE = [
+  { name: "행운복권방(서울)", count: 18 },
+  { name: "대박로또(부산)", count: 15 },
+  { name: "로또명당(대구)", count: 13 },
+  { name: "황금열쇠복권(인천)", count: 12 },
+  { name: "럭키스토어(경기)", count: 11 },
+];
+
 function pad2(n) {
   return String(n).padStart(2, "0");
 }
@@ -98,8 +115,7 @@ function toast(msg) {
   toastTimer = window.setTimeout(() => el.classList.remove("show"), 1600);
 }
 
-function renderBalls(draws) {
-  const root = $("#balls");
+function renderBallsInto(root, draws) {
   if (!root) return;
   root.innerHTML = "";
 
@@ -134,6 +150,11 @@ function renderBalls(draws) {
 
     root.appendChild(row);
   }
+}
+
+function renderBalls(draws) {
+  renderBallsInto($("#balls"), draws);
+  renderBallsInto($("#broadcastBalls"), draws);
 }
 
 function renderHistory(history) {
@@ -207,6 +228,56 @@ function batchToText(draws) {
     .join("\n");
 }
 
+function renderExamplePanels() {
+  const amount = $("#biggestAmount");
+  const round = $("#biggestRound");
+  const date = $("#biggestDate");
+  const nums = $("#biggestNumbers");
+  const shops = $("#topShops");
+
+  if (amount) amount.textContent = BIGGEST_JACKPOT_EXAMPLE.amountWon;
+  if (round) round.textContent = `${BIGGEST_JACKPOT_EXAMPLE.round}회`;
+  if (date) date.textContent = BIGGEST_JACKPOT_EXAMPLE.date;
+
+  if (nums) {
+    nums.innerHTML = "";
+    for (const n of BIGGEST_JACKPOT_EXAMPLE.numbers) {
+      const s = document.createElement("span");
+      s.className = "mini";
+      s.textContent = String(n);
+      s.style.background = numberColor(n);
+      nums.appendChild(s);
+    }
+    const plus = document.createElement("span");
+    plus.className = "mini-plus";
+    plus.textContent = "+";
+    nums.appendChild(plus);
+
+    const b = document.createElement("span");
+    b.className = "mini bonus";
+    b.textContent = String(BIGGEST_JACKPOT_EXAMPLE.bonus);
+    b.style.background = numberColor(BIGGEST_JACKPOT_EXAMPLE.bonus);
+    nums.appendChild(b);
+  }
+
+  if (shops) {
+    shops.innerHTML = "";
+    TOP_FIRST_PRIZE_SHOPS_EXAMPLE.forEach((x, idx) => {
+      const li = document.createElement("li");
+      li.className = "shop-item";
+      const left = document.createElement("span");
+      left.className = "shop-name";
+      left.textContent = `${idx + 1}. ${x.name}`;
+      const right = document.createElement("span");
+      right.className = "shop-count";
+      right.textContent = `${x.count}회`;
+      li.appendChild(left);
+      li.appendChild(right);
+      shops.appendChild(li);
+    });
+  }
+}
+
 async function copyCurrentNumbers() {
   const text = batchToText(currentBatch);
   if (!text) {
@@ -268,12 +339,21 @@ function init() {
   const btnClear = $("#btnClearHistory");
   const drawTime = $("#drawTime");
   const btnTheme = $("#btnTheme");
+  const broadcastTime = $("#broadcastTime");
+  const currentRound = $("#currentRound");
 
   let history = loadHistory();
   renderHistory(history);
 
   const theme = loadTheme();
   applyTheme(theme);
+
+  renderExamplePanels();
+
+  const now0 = new Date();
+  const baseRound = 999; // 모의 방송 회차(원하면 실제 회차로 변경)
+  if (currentRound) currentRound.textContent = String(baseRound);
+  if (broadcastTime) broadcastTime.textContent = formatTime(now0);
 
   currentBatch = [];
 
@@ -284,6 +364,7 @@ function init() {
     currentBatch = draws;
     renderBalls(draws);
     if (drawTime) drawTime.textContent = time;
+    if (broadcastTime) broadcastTime.textContent = time;
     if (btnCopy) btnCopy.disabled = false;
 
     history = [{ draws, time }, ...history].slice(0, MAX_HISTORY);

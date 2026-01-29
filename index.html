@@ -33,6 +33,79 @@
       </header>
 
       <main class="page" aria-labelledby="title">
+        <section id="broadcast" class="broadcast" aria-label="로또 방송 화면(모의)">
+          <div class="broadcast-top">
+            <div class="broadcast-badge">
+              <span class="live-dot" aria-hidden="true"></span>
+              LIVE · 모의 로또 방송
+            </div>
+            <div class="broadcast-meta">
+              <span class="pill pill-dark">회차: <strong id="currentRound">-</strong></span>
+              <span class="pill pill-dark">방송시각: <strong id="broadcastTime">-</strong></span>
+            </div>
+          </div>
+
+          <div class="studio">
+            <div class="screen" aria-label="당첨 번호 스크린">
+              <div class="screen-header">
+                <div class="screen-title">당첨번호 발표</div>
+                <div class="screen-sub">1~45 · 6개 + 보너스 · 5게임</div>
+              </div>
+              <div class="screen-body">
+                <div id="broadcastBalls" class="broadcast-balls" aria-live="polite" aria-atomic="true"></div>
+              </div>
+              <div class="ticker" aria-label="자막">
+                <div class="ticker-track">
+                  <span class="ticker-item">본 화면은 연습용(모의) 방송 UI입니다.</span>
+                  <span class="ticker-item">Enter: 5게임 추첨 · C: 전체 복사</span>
+                  <span class="ticker-item">기록은 이 브라우저에만 저장됩니다.</span>
+                  <span class="ticker-item">최고 당첨금/판매점 TOP은 예시 데이터입니다(스크립트에서 수정 가능).</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="side" aria-label="방송 정보 패널">
+              <div class="side-card">
+                <div class="side-head">
+                  <div class="side-title">최고 당첨금 (역대)</div>
+                  <div class="side-tag">예시</div>
+                </div>
+                <div class="side-kpi">
+                  <div class="kpi-label">금액</div>
+                  <div id="biggestAmount" class="kpi-value">-</div>
+                </div>
+                <div class="side-row">
+                  <div class="kv">
+                    <div class="kv-label">회차</div>
+                    <div id="biggestRound" class="kv-value">-</div>
+                  </div>
+                  <div class="kv">
+                    <div class="kv-label">발표일</div>
+                    <div id="biggestDate" class="kv-value">-</div>
+                  </div>
+                </div>
+                <div class="side-divider"></div>
+                <div class="kv-label">당첨번호</div>
+                <div id="biggestNumbers" class="mini-row" aria-label="최고 당첨금 회차 당첨번호"></div>
+              </div>
+
+              <div class="side-card">
+                <div class="side-head">
+                  <div class="side-title">1등 많이 나온 판매점 TOP</div>
+                  <div class="side-tag">예시</div>
+                </div>
+                <ol id="topShops" class="shops" aria-label="판매점 랭킹"></ol>
+                <div class="side-note">실데이터 연동이 필요하면(회차/판매점/당첨금) API 연결로 바꿔드릴 수 있어요.</div>
+              </div>
+            </aside>
+          </div>
+
+          <div class="broadcast-actions" aria-label="방송 조작">
+            <button id="btnDraw" class="btn btn-primary btn-lg" type="button">▶ 추첨하기</button>
+            <button id="btnCopy" class="btn btn-lg" type="button" disabled>번호 복사</button>
+          </div>
+        </section>
+
         <section id="hero" class="hero" aria-label="히어로">
           <div class="hero-bg" aria-hidden="true"></div>
           <div class="hero-content">
@@ -46,8 +119,8 @@
               한 번에 <strong>5게임</strong> · 각 게임 <strong>6개 + 보너스</strong> · 자동 정렬 · 기록 저장
             </p>
             <div class="hero-actions">
-              <button id="btnDraw" class="btn btn-primary btn-lg" type="button">▶ 추첨하기</button>
-              <button id="btnCopy" class="btn btn-lg" type="button" disabled>번호 복사</button>
+              <a class="btn btn-primary btn-lg" href="#broadcast">▶ 방송 화면으로</a>
+              <a class="btn btn-lg" href="#result">추천 번호 보기</a>
             </div>
             <div class="hero-meta">
               <span class="pill">단축키: Enter</span>
